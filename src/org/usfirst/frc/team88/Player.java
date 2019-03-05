@@ -13,12 +13,20 @@ public class Player extends JFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	
+	private ConnectionIndicator connectionIndicator;
+	
 
 	public Player() {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setTitle("TJAlerts");
         this.setSize(100, 100);
         this.setVisible(true);
+        
+        connectionIndicator = new ConnectionIndicator();
+        this.add(connectionIndicator);
+        connectionIndicator.setConnected(false);
+        connectionIndicator.setVisible(true);
     }
 
     public void playSound(String fileName){
@@ -49,14 +57,27 @@ public class Player extends JFrame {
     }
     
     public void indicateConnected() {
-    	this.add(new ConnectionIndicator());
+    	connectionIndicator.setConnected(true);
+    }
+    
+    public void indicateDisconnected() {
+    	connectionIndicator.setConnected(false);
     }
     
     class ConnectionIndicator extends JComponent {
+    	
+    	private boolean m_connected = false;
+    	
+    	private static final long serialVersionUID = 2L;
 
     	public void paint(Graphics g) {
-    		g.setColor(Color.GREEN);
-    		g.drawRect(0, 0, 100, 100);
+    		g.setColor((m_connected ? Color.GREEN : Color.RED));
+    		g.fillRect(0, 0, 100, 100);
+    	}
+    	
+    	public void setConnected(boolean connected) {
+    		m_connected = connected;
+    		repaint();
     	}
 	}
     

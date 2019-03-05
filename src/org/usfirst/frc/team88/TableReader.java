@@ -33,10 +33,15 @@ public class TableReader {
 	    sound.addListener((notification) -> {player.playSound(notification.value.getString());}, 
 	    		EntryListenerFlags.kNew | EntryListenerFlags.kUpdate);
 	    
-	    player.indicateConnected();
-	    
 		while (true) {
 			try {
+				
+				if (inst.isConnected()) {
+					player.indicateConnected();
+				} else {
+					player.indicateDisconnected();
+				}
+				
 				Thread.sleep(50);
 			} catch (InterruptedException ex) {
 			}
