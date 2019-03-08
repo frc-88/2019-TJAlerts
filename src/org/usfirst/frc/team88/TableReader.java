@@ -30,8 +30,10 @@ public class TableReader {
 	    table = inst.getTable("alerts");
 	    sound = table.getEntry("sound");
 	    
-	    sound.addListener((notification) -> {player.playSound(notification.value.getString());}, 
-	    		EntryListenerFlags.kNew | EntryListenerFlags.kUpdate);
+	    sound.addListener((notification) -> {
+	    	player.playSound(notification.value.getString());
+	    	sound.setString("");
+	    }, EntryListenerFlags.kNew | EntryListenerFlags.kUpdate);
 	    
 		while (true) {
 			try {
